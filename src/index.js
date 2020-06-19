@@ -4,32 +4,45 @@ window.onload = function(){
     var canvas = document.getElementById("canvas");
     var context = canvas.getContext("2d");
 
-    //Draw line steps
-    context.beginPath(); // reset the context state
-    context.moveTo(30, 30); // move(x, y) -> starting point of the line
-    context.lineTo(80, 80); //line(x, y) -> end point of the line
-    context.lineTo(130, 30); //line(x, y) -> end point of the line
-    context.lineTo(180, 80); //line(x, y) -> end point of the line
-    context.lineTo(230, 30); //line(x, y) -> end point of the line
-    context.stroke();  // draw the line
+    /* 
+        Line Caps -> context.lineCap = "";
+        - butt -> default
+        - round
+        - square
+    */
 
-   /*  //Draw line steps
-    context.beginPath(); // reset the context state
-    context.moveTo(80, 80); // move(x, y) -> starting point of the line
-    context.lineTo(130, 30); //line(x, y) -> end point of the line
-    context.stroke();  // draw the line
+    /* First line with line cap butt(default)*/
+    context.beginPath();
+    context.lineCap = "butt";
+    context.strokeStyle = "red";
+    context.lineWidth = 20;
+    context.moveTo(100, 30);
+    context.lineTo(100, 300);
+    context.stroke();
 
 
-    //Draw line steps
-    context.beginPath(); // reset the context state
-    context.moveTo(130, 30); // move(x, y) -> starting point of the line
-    context.lineTo(180, 80); //line(x, y) -> end point of the line
-    context.stroke();  // draw the line
-
-    //Draw line steps
-    context.beginPath(); // reset the context state
-    context.moveTo(180, 80); // move(x, y) -> starting point of the line
-    context.lineTo(230, 30); //line(x, y) -> end point of the line
-    context.stroke();  // draw the line */
+    /* Second line with line cap square*/
+    context.beginPath();
+    context.lineCap = "square";
+    context.lineWidth = 20;
+    context.moveTo(250, 30);
+    context.lineTo(250, 300);
+    context.strokeStyle = "blue";
+    context.stroke();
+    
+    
+    /* Third line with line cap round*/
+    context.beginPath();
+    context.lineCap = "round";
+    context.lineWidth = 20;
+    context.strokeStyle = "green";
+    context.moveTo(400, 30);
+    context.lineTo(400, 300);
+    context.stroke();
 
 }
+
+
+/*
+ *  Note => square and round line cap increase the size of the line 
+ */
