@@ -5,23 +5,24 @@ window.onload = function(){
     var context = canvas.getContext("2d");
 
     /* 
-        Line Caps -> context.lineJoin = "miter| bevel | round";
-        - miter -> default
-        - bevel
-        - round
+       shadow attributes on canvas
+       - shadowColor
+       - shadowOffsetX
+       - shadowOffsetY
+       - shadowBlur
     */
-
-    /* First line with line cap butt(default)*/
     context.beginPath();
     context.strokeStyle = "red";
-    // context.lineJoin = "bevel";
-    context.lineJoin = "round";
-    context.lineWidth = 20;
-    context.moveTo(50, 50);
-    context.lineTo(300, 50);
-    context.lineTo(300, 300);
-    context.lineTo(50, 300);
-    context.lineTo(50, 450);
+    context.lineWidth = 60;
+
+    context.shadowColor = "black";
+    context.shadowOffsetX = 10;
+    context.shadowOffsetY = 10;
+    context.shadowBlur = 10;
+
+    context.moveTo(100, 60);
+    context.lineTo(300, 60);
     context.stroke();
+ 
 }
 
