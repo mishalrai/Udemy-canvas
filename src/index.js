@@ -5,30 +5,25 @@ window.onload = function(){
     var context = canvas.getContext("2d");
 
     /* 
-       shadow attributes on canvas
-       - shadowColor
-       - shadowOffsetX
-       - shadowOffsetY
-       - shadowBlur
+       arc
+       arc(x,y,r,sa,ea, counterClockeWise)
+
+       - x => x co-ordinate
+       - y => y co-ordinate
+       - radius => circle radius
+       - sa => start angle
+       - ea => end angle
+       - counterClockwise
     */
+
+    var radian = Math.PI / 180;
+
     context.beginPath();
+    context.lineWidth = 30;
     context.strokeStyle = "red";
-    context.lineWidth = 60;
-
-    /* Shadow attributes */
-    context.shadowColor = "black";
-    context.shadowOffsetX = 10;
-    context.shadowOffsetY = 10;
-    context.shadowBlur = 10;
-
-    context.moveTo(100, 60);
-    context.lineTo(300, 60);
-    context.lineTo(100, 300);
-    context.lineTo(300, 300);
-    context.lineCap = "round";
-    context.lineJoin = "round";
-    
+    context.arc(200, 200, 50, 0*radian, 180*radian, false);
     context.stroke();
+
  
 }
 
