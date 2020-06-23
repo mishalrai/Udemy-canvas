@@ -21,9 +21,7 @@ window.onload = function(){
     context.beginPath();
     context.lineWidth = 30;
     context.strokeStyle = "red";
-    context.arc(200, 200, 50, 0*radian, 180*radian, false);
+    context.arc(200, 200, 50, 0*radian, 180*radian, true);
     context.stroke();
-
- 
 }
 
