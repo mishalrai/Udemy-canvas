@@ -18,7 +18,7 @@ window.onload = function(){
 
     for( y=0; y <8; y++){
         for( x=0; x<8; x++){
-            var fillColor = (x+y)%2 !== 0 ? darkCellColor : lightCellColor;
+            var fillColor = (x+y)%2 == 0 ? lightCellColor : darkCellColor;
             ctx.fillStyle = fillColor;
             ctx.fillRect(50 + x*50, 50 + y*50, 50, 50);
          }
