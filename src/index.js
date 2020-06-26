@@ -4,23 +4,25 @@ window.onload = function(){
     var canvas = document.getElementById("canvas");
     var ctx = canvas.getContext("2d");
 
-    //First 
-    /**
-     *  Syntax ctx.rect(X, Y, width, height);
-     */
+    /* COLORS */
+    var lightCellColor = "#ddb180";
+    var darkCellColor = "#7c330c";
 
-    ctx.rect(50, 100, 50, 50);
-    ctx.stroke();
+    ctx.fillStyle = darkCellColor;
+    ctx.fillRect( 30, 30, 440, 440);
 
-    // ctx.fillStyle = "red";
-    ctx.fillRect( 120, 100, 50, 50);
-
-
-    ctx.strokeRect( 180, 100, 50, 50);
-
-    // ctx.clearRect( 0, 0, 500, 120);
+    ctx.beginPath();
+    ctx.lineWidth = 5;
+    ctx.strokeRect( 47.5, 47.5, 405, 405);
 
 
+    for( y=0; y <8; y++){
+        for( x=0; x<8; x++){
+            var fillColor = (x+y)%2 !== 0 ? darkCellColor : lightCellColor;
+            ctx.fillStyle = fillColor;
+            ctx.fillRect(50 + x*50, 50 + y*50, 50, 50);
+         }
+    }
+    
 }
-
 
