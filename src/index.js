@@ -22,9 +22,28 @@ window.onload = function(){
     ctx.fillStyle = "white";
     ctx.strokeStyle = "white";
     ctx.fill();
-    ctx.strokeStyle();
-
     ctx.stroke();
     
+
+    ctx.beginPath();
+    ctx.strokeStyle = "red";
+    ctx.fillStyle = "red";
+    ctx.arc(400, 100, 80, 120*radiant, 300*radiant, false);
+    ctx.stroke();
+    ctx.fill(); 
+    
+    ctx.beginPath();
+    ctx.strokeStyle = "red";
+    ctx.fillStyle = "red";
+    ctx.arc(400, 100, 80, 60*radiant, 240*radiant, false);
+    ctx.stroke();
+    ctx.fill();
+
+    ctx.beginPath();
+    ctx.strokeStyle = "white";
+    ctx.fillStyle = "white";
+    ctx.arc(390, 60, 7, 0, 360*radiant, false);
+    ctx.fill();
+    ctx.stroke();
 }
 
