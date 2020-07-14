@@ -3,37 +3,21 @@ window.onload = function(){
     // Definations
     var canvas = document.getElementById("canvas");
     var ctx = canvas.getContext("2d");
-
-    // ctx.font = "font-style font-weight font-size font-family";
-
-    //font-style
-        // -normal (the default)
-        // -italic
-        // - oblique
-        // - inherit (style comes from the parent element)
-
     
-    // font-weight
-        // - normal (the default)
-        // - bold
-        // - bolder
-        // - lighter
-        // - 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900
-        // - inherit (style comes from the parent element)
 
-    // font-size
-        // - xx-small | x-small | small | smaller | medium | large | x-large | xx-large
-        // - exact number in px (pixels), pt (points) or em (ems)
-        // - inherit;
+    draw3DText("Hello Mishal Rai", 20, 100, "normal bolder 45px courier", "red", 15);
 
-    // font-family
-        // - fomily-name (linke "times", "courier", "arial"...)
-        // - generic-family (like "serif", "sans-serif", "cursive")
-        // - inherit (style comes from the parent element)
+    function draw3DText( text, x, y, style, color, size){
+        var i = 0;
+        ctx.font = style;
+        ctx.fillStyle = "black";
+        for( i; i< size; i++){
+            ctx.fillText(text, x+i, y+i);
+        }
 
-    var text = "I am testing text styling";
-    ctx.font = "normal bolder xx-large courier";
-    ctx.fillText(text, 10, 100);
+        ctx.fillStyle = color;
+        ctx.fillText( text, x, y);
+    }   
 
 
 }
