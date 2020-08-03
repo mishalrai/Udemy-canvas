@@ -14,10 +14,12 @@ window.onload = function(){
 
     img.onload = function(){
         
-        // context.drawImage( img, 50, 50, 1000, 1000);
+        context.drawImage( img, 50, 400)
+
+        context.drawImage( img, 300, 40, img.width * 0.7, img.height*0.7);
 
         context.drawImage( img, 304, 30, 150, 322, 50, 50, 150, 322);
-
+        
     }
     
 }
