@@ -61,6 +61,26 @@ window.onload = function(){
         context.putImageData(imageData, 50, 50);
 
 
+        // Save the canvas as PNG as default
+        var dataURL = canvas.toDataURL();
+        console.log(dataURL, 'data URL');
+
+        /* Create download button */
+        var downloadBtn = document.createElement('button');
+        downloadBtn.innerText = 'Download Canvas as PNG';
+        downloadBtn.style.margin = '30px auto';
+        downloadBtn.style.display = 'block';
+        document.body.appendChild(downloadBtn);
+
+        downloadBtn.addEventListener('click', function(){
+            var link = document.createElement('a');
+            link.href = dataURL;
+            link.download = dataURL;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        });
+
     }
     
 }
