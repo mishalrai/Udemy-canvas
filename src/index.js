@@ -3,34 +3,67 @@ window.onload = function(){
     var canvas = document.getElementById("canvas");
     var context = canvas.getContext("2d");
     
-    var gap = 80;
 
-    // context.createLinearGradient(x1, y1, x2, y2);
-    // context.crateRadialGradiant( x1, y1, r1, x2, y2, r2);
-
-
-
-
-    var radialGradient = context.createRadialGradient(200, 200, 400, canvas.width -gap, canvas.height -gap, 400);
-    radialGradient.addColorStop(0, 'red');
-    radialGradient.addColorStop(0.5, 'black');
-    radialGradient.addColorStop(1, 'blue');
+    var ballX = 20;
+    var ballY = 20;
+    var ballRadius = 30;
+    var ballColor = 'orange';
+    var changeX = 10;
+    var changeY = 10;
+    var radian = Math.PI / 180;
 
 
-    context.fillStyle = radialGradient;
-    context.rect( gap/2, gap/2, (canvas.width-gap) / 2, canvas.height-gap );
-    context.stroke();
-    context.fill();
+    window.requestAnimationFrame( animationLoop );
 
-    var linearGradient = context.createLinearGradient( gap/2, gap/2, canvas.width -gap, canvas.height -gap);
-    linearGradient.addColorStop(0, 'red');
-    linearGradient.addColorStop(0.5, 'yellow');
-    linearGradient.addColorStop(1, 'blue');
+    function animationLoop(){
 
-    context.fillStyle = linearGradient;
-    context.fillRect( gap/2 + (canvas.width-gap) / 2, gap/2, (canvas.width-gap) / 2, canvas.height-gap );
-   
+       
+        // clear Canvas
+        context.clearRect( 0, 0, canvas.clientWidth, canvas.height );
+
+        ballX += changeX;
+        ballY += changeY;
+
+        if( ballY + ballRadius > canvas.height){
+            changeY *= -1;
+        }
+
+        if( ballX + ballRadius > canvas.width){
+            changeX *= -1;
+        }
+
+        if( ballX - ballRadius < 0){
+            changeX *= -1;
+        }
+      
+        if( ballY - ballRadius < 0){
+            changeY *= -1;
+        }
+
+        console.log('x '+ballX, 'y '+ballY, 'width '+canvas.width, 'height '+canvas.height); 
+
+        drawBall ( ballX, ballY, ballRadius, ballColor);
+        window.requestAnimationFrame( animationLoop );
+    }
 
 
+    function drawBall ( ballX, ballY, ballRadius, ballColor){
+
+        context.beginPath();
+        context.fillStyle = ballColor;
+        context.arc(ballX, ballY, ballRadius, 0, 360*radian , false);
+        context.fill();
+    }
+
+    window.requestAnimationFrame = (function(){
+        return window.requestAnimationFrame       ||
+               window.webkitRequestAnimationFrame ||
+               window.mozRequestAnimationFrame    ||
+               window.msRequestionAnimationFrame  ||
+               function( callback){
+                   console.log('from settimeout');
+                   window.setTimeout(callback, 1000/60);
+               }
+    })()
 
 }
