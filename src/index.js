@@ -8,11 +8,14 @@ window.onload = function () {
     var radiant = Math.PI / 180;
 
 
-    // context.scalte( horzontalScaleFactor, verticalScaleFoctor)  -> scales the content 
-
-    context.rotate( 10 * radiant);
+    context.translate( -100, -100);
     context.fillStyle = 'red';
     context.rect( 100, 100, 100, 100);
+    context.fill();
+
+
+    context.fillStyle = 'blue';
+    context.rect( 200, 200, 100, 100);
     context.fill();
 
 }
