@@ -1,54 +1,75 @@
 
-window.onload = function(){
+window.onload = function () {
     var canvas = document.getElementById("canvas");
     var context = canvas.getContext("2d");
 
+    var isBackgroundLoaded = false;
+    var isHeroloaded = false;
 
 
+    /* BACKGROUND */
+    var backgroundImage = new Image();
+    backgroundImage.src = 'src/background.jpg';
+
+    backgroundImage.onload = function () {
+        isBackgroundLoaded = true;
+        
+    }
+
+
+    /* HERO */
     var spriteImage = new Image();
     spriteImage.src = 'src/sprite.png';
 
-    // drawImage( img, sx, sy, sw, sh, dx, dy, dw, dy, )
     var cellWidth = 75;
     var cellHeight = 80;
-    
-    spriteImage.onload = function(){
-        context.drawImage( spriteImage, 0, 0 );
-        // context.drawImage( spriteImage, 0, 0, (cellSize * index), cellSize, 600, 350, cellSize, cellSize );
+
+    spriteImage.onload = function () {
+        isHeroloaded = true;
     };
 
 
-    requestAnimationFrame( animationLoop );
+    /* MOVE SPECIFICATION */
+    var moveAmount = 2;
+    var moveX = 0;
+
+    requestAnimationFrame(animationLoop);
 
     var counter = 0;
-    var rowCount = 0;
     var start = new Date();
 
-    function animationLoop(){
+    function animationLoop() {
         var now = new Date();
-        if( now - start > 30){
+        if (now - start > 30) {
             start = now;
-            context.clearRect(600, 350, cellWidth, cellHeight);
             counter %= 14;
-            drawTileCell(counter, rowCount);
+            context.clearRect(0, 0, canvas.width, canvas.height);
+
+            if(moveX >= canvas.width){
+                moveX = -1 * cellWidth;
+            }
+            moveX += moveAmount;
+
+            if(isBackgroundLoaded){
+                context.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
+            }
+            if(isHeroloaded){
+                context.drawImage(spriteImage, counter * cellWidth, 0, cellWidth, cellHeight, moveX, 200, 50, 50);
+            }
             counter++;
         }
-        requestAnimationFrame( animationLoop );
-        
+        requestAnimationFrame(animationLoop);
     };
 
-    function drawTileCell( index ){
-        context.drawImage( spriteImage, index*cellWidth, 0, cellWidth, cellHeight, 600, 350, cellWidth, cellHeight );
-    }
 
-    window.requestAnimationFrame = (function(){
-        return window.requestAnimationFrame       ||
-               window.webkitRequestAnimationFrame ||
-               window.mozRequestAnimationFrame    ||
-               window.msRequestionAnimationFrame  ||
-               function( callback){
-                   window.setTimeout(callback, 1000/60);
-               }
+    window.requestAnimationFrame = (function () {
+        return window.requestAnimationFrame ||
+            window.webkitRequestAnimationFrame ||
+            window.mozRequestAnimationFrame ||
+            window.msRequestionAnimationFrame ||
+            function (callback) {
+                window.setTimeout(callback, 1000 / 60);
+            }
     })()
 
 }
