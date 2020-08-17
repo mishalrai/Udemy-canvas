@@ -8,14 +8,25 @@ window.onload = function () {
     var radiant = Math.PI / 180;
 
 
-    context.translate( -100, -100);
+    // context.transform(m11, m12, m21, m22, dx, dy);
+    // context.setTransform(m11, m12, m21, m22, dx, dy);
+    // context.resetTransform()
+
     context.fillStyle = 'red';
     context.rect( 100, 100, 100, 100);
     context.fill();
 
-
+    // Scale Transform
+    context.setTransform( 1.5, 0, 0, 1.5, 0, 0);
     context.fillStyle = 'blue';
-    context.rect( 200, 200, 100, 100);
+    context.rect( 100, 100, 100, 100);
     context.fill();
+
+    // Scale Transform
+    context.reset( );
+    context.fillStyle = 'green';
+    context.rect( 100, 100, 100, 100);
+    context.fill();
+
 
 }
