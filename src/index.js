@@ -5,28 +5,32 @@ window.onload = function () {
     var canvas = document.getElementById("canvas");
     var context = canvas.getContext("2d");
 
-    var radiant = Math.PI / 180;
+    var ball = new Ball(20, 'green');
+    ball.x = canvas.width/2;
+    ball.y = canvas.height/2;
+    ball.context = context;
+    ball.draw();
 
+    
+    // requestAnimationFrame(animationLoop);
 
-    // context.transform(m11, m12, m21, m22, dx, dy);
-    // context.setTransform(m11, m12, m21, m22, dx, dy);
-    // context.resetTransform()
+    function animationLoop() {
+        
+        // Clear Canvas
+        context.clearRect( 0, 0, canvas.width, canvas.height );
+        
+        requestAnimationFrame(animationLoop);
+    };
 
-    context.fillStyle = 'red';
-    context.rect( 100, 100, 100, 100);
-    context.fill();
-
-    // Scale Transform
-    context.setTransform( 1.5, 0, 0, 1.5, 0, 0);
-    context.fillStyle = 'blue';
-    context.rect( 100, 100, 100, 100);
-    context.fill();
-
-    // Scale Transform
-    context.reset( );
-    context.fillStyle = 'green';
-    context.rect( 100, 100, 100, 100);
-    context.fill();
+    window.requestAnimationFrame = (function () {
+        return window.requestAnimationFrame ||
+            window.webkitRequestAnimationFrame ||
+            window.mozRequestAnimationFrame ||
+            window.msRequestionAnimationFrame ||
+            function (callback) {
+                window.setTimeout(callback, 1000 / 60);
+            }
+    })()
 
 
 }
