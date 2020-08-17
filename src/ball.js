@@ -8,7 +8,7 @@ function Ball(radius, color){
     ball.x = 0;                // center x
     ball.y = 0;                // center y
     ball.m = 0;                // mass
-    ball.vs= 0;                // velocity of x direction of ball
+    ball.vx= 0;                // velocity of x direction of ball
     ball.vy= 0;                // velocity of y direction of ball
     ball.context = null;       // the drawing context of ball
 
