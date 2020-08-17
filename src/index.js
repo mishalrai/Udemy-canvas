@@ -5,21 +5,30 @@ window.onload = function () {
     var canvas = document.getElementById("canvas");
     var context = canvas.getContext("2d");
 
-    // What is acceleration?
-    // Acceleration is the rate of change of velocity of an object with respect to time
-    // Acceleration is a vector quantity
-    // Acceleration is respresented by the formula 
-    // velocity = Δv/Δt
+    var g = 0.098 //gravity
 
-    var ball = new Ball(20, 'green');
-    ball.x = canvas.width/2;
-    ball.y = canvas.height/2;
-    ball.context = context;
-    ball.draw(); 
+    //Ball 1
+    var ball1 = new Ball(20, 'green');
+        ball1.x = 100;
+        ball1.y = 200;
+        ball1.context = context;
+    
+    //Ball 2
+    var ball2 = new Ball(20, 'gree');
+        ball2.x = 200;
+        ball2.y = 200;
+        ball2.context = context;
+
+    //Ball 3
+    var ball3 = new Ball(20, 'gree');
+        ball3.x = 300;
+        ball3.y = 600;
+        ball3.context = context;
 
     //Velocity
-    ball.vx = -2;
-    ball.vy = -2;
+    ball1.vy = 0;
+    ball2.vy = 2;
+    ball3.vy = -10;
 
     //Acceleration 
     var ax = 0.05;
@@ -32,15 +41,21 @@ window.onload = function () {
         // Clear Canvas
         context.clearRect( 0, 0, canvas.width, canvas.height );
 
+        // Ball 1
+        ball1.vy = ball1.vy + g;
+        ball1.y = ball1.y + ball1.vy;
 
-        //Update 
-        // ball.vx = ball.vx + ax;
-        // ball.x = ball.x + ball.vx;
- 
-        ball.vy = ball.vy + ay;
-        ball.y = ball.y + ball.vy;
+        //Ball 2
+        ball2.vy = ball2.vy + g;
+        ball2.y = ball2.y + ball2.vy;
 
-        ball.draw();
+        //Ball 2
+        ball3.vy = ball3.vy + g;
+        ball3.y = ball3.y + ball3.vy;
+
+        ball1.draw();
+        ball2.draw();
+        ball3.draw();
         
         requestAnimationFrame(animationLoop);
     };
