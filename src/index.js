@@ -8,26 +8,26 @@ window.onload = function () {
     var g = 0.098 //gravity
 
     //Ball 1
-    var ball = new Ball(20, 'green');
-        ball.x = 100;
-        ball.y = 200;
-        ball.context = context;
-        ball.draw();
+    var ball1 = new Ball(50, 'green');
+        ball1.x = 255;
+        ball1.y = 250;
+        ball1.m = 100;
+        ball1.context = context;
+        ball1.draw();
 
     //Ball 2
-    var ball2 = new Ball(20, 'red');
-        ball2.x = 30;
-        ball2.y = 480;
+    var ball2 = new Ball(25, 'red');
+        ball2.x = 550;
+        ball2.y = 250;
+        ball2.m = 5;
         ball2.context = context;
         ball2.draw();
     
 
-    //Velocity
-    ball.vx = 5;
-    ball.vy = 0;
-   
-    ball2.vx = 5;
-    ball2.vy = -7;
+    // Velocity
+    ball1.vx = 5;   
+       
+    ball2.vx = -5;
 
     requestAnimationFrame(animationLoop);
 
@@ -38,18 +38,34 @@ window.onload = function () {
 
         
         // Update
+        ball1.x = ball1.x + ball1.vx;
+        ball2.x = ball2.x + ball2.vx;
 
-            //ball
-            ball.vy = ball.vy + g;
-            ball.x = ball.x + ball.vx;
-            ball.y = ball.y + ball.vy;
+        // Detect Ball collisions
+        if( Math.abs(ball1.x - ball2.x) < ball1.r + ball2.r){
+            
+            // New valocity of ball 1 after collision
+            var v1 =  ((ball1.m - ball2.m) * ball1.vx)  / (ball1.m + ball2.m) ;
+                v1 += (2 * ball2.m * ball2.vx) / (ball1.m + ball2.m);
 
-            //ball2
-            ball2.vy = ball2.vy + g;
-            ball2.x = ball2.x + ball2.vx;
-            ball2.y = ball2.y + ball2.vy;
+            // New valocity of ball 2 after collision
+            var v2 = ((ball2.m - ball1.m) * ball2.vx) / (ball1.m + ball2.m);
+                v2 += (2 * ball1.m * ball1.vx) / (ball1.m + ball2.m);
 
-        ball.draw();
+                ball1.vx = v1;
+                ball2.vx = v2;
+
+        }
+
+        // Detect Edge collisions
+        if( ball1.x + ball1.r > canvas.width || ball1.x - ball1.r < 0 ){
+            ball1.vx *= -1;
+        }
+        if( ball2.x + ball2.r > canvas.width || ball2.x - ball2.r < 0 ){
+            ball2.vx *= -1;
+        }
+
+        ball1.draw();
         ball2.draw();
     
         
