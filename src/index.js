@@ -6,36 +6,37 @@ window.onload = function () {
     var context = canvas.getContext("2d");
 
 
-    var KEY_CODE = {
-        LEFT: 37,
-        UP: 38,
-        RIGHT: 39, 
-        DOWN: 40
-    }
+    canvas.addEventListener('mousedown', function(events){
 
+    });
+    
+    canvas.addEventListener('mouseup', function(events){
 
-    window.addEventListener('keydown', function(event){
+    });
+    
+   /*  canvas.addEventListener('mousemove', function(event){
+        console.log('mousemove');
+        console.log(event);
+    }); */
+   
+    canvas.addEventListener('click', function(event){
+        console.log('click');
+        console.log(event);
+    });
 
-        switch(event.keyCode){
+    canvas.addEventListener('dblclick', function(event){
+        console.log('dblclick');
+        console.log(event);
+    });
 
-            case KEY_CODE.LEFT: 
-                console.log('LEFT ARROW PRESSED');
-                break;
-            
-            case KEY_CODE.UP: 
-                console.log('UP ARROW PRESSED');
-                break;
-            
-            case KEY_CODE.RIGHT: 
-                console.log('RIGHT ARROW PRESSED');
-                break;
-            
-            case KEY_CODE.DOWN: 
-                console.log('DOWN ARROW PRESSED');
-                break;
-            
-        }
+    canvas.addEventListener('mouseover', function(event){
+        console.log('mouseover');
+        console.log(event);
+    });
 
+    canvas.addEventListener('mouseout', function(event){
+        console.log('mouseout');
+        console.log(event);
     });
 
 }
