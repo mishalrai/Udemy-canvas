@@ -5,29 +5,27 @@ window.onload = function () {
     var canvas = document.getElementById("canvas");
     var context = canvas.getContext("2d");
 
-    var g = 0.098 //gravity
+    var numOfBalls = 10;
+    var balls = [];
 
-    //Ball 1
-    var ball1 = new Ball(50, 'green');
-        ball1.x = 255;
-        ball1.y = 250;
-        ball1.m = 100;
-        ball1.context = context;
-        ball1.draw();
+    for( var i = 0; i< numOfBalls; i++){
 
-    //Ball 2
-    var ball2 = new Ball(25, 'red');
-        ball2.x = 550;
-        ball2.y = 250;
-        ball2.m = 5;
-        ball2.context = context;
-        ball2.draw();
-    
+        var radius = getRandomInt( 10, 25 );
+        
+        var ball = new Ball( radius );
+        ball.x = getRandomInt( radius, canvas.width - radius );
+        ball.y = getRandomInt( radius, canvas.height - radius );
 
-    // Velocity
-    ball1.vx = 5;   
-       
-    ball2.vx = -5;
+        ball.m = radius; 
+        ball.context = context;
+        ball.vx = getRandomInt(0, 20) - 10.5;
+        ball.vy = getRandomInt(0, 20) - 10.5;
+        ball.draw();
+        balls.push(ball);
+
+    }
+
+
 
     requestAnimationFrame(animationLoop);
 
@@ -36,52 +34,97 @@ window.onload = function () {
         // Clear Canvas
         context.clearRect( 0, 0, canvas.width, canvas.height );
 
-        
         // Update
-        ball1.x = ball1.x + ball1.vx;
-        ball2.x = ball2.x + ball2.vx;
+        moveBalls();
 
-        // Detect Ball collisions
-        if( Math.abs(ball1.x - ball2.x) < ball1.r + ball2.r){
-            
-            // New valocity of ball 1 after collision
-            var v1 =  ((ball1.m - ball2.m) * ball1.vx)  / (ball1.m + ball2.m) ;
-                v1 += (2 * ball2.m * ball2.vx) / (ball1.m + ball2.m);
+        // Check collision
+        checkBallCollisions();
 
-            // New valocity of ball 2 after collision
-            var v2 = ((ball2.m - ball1.m) * ball2.vx) / (ball1.m + ball2.m);
-                v2 += (2 * ball1.m * ball1.vx) / (ball1.m + ball2.m);
+        // Draw
+        drawBalls();
 
-                ball1.vx = v1;
-                ball2.vx = v2;
-
-        }
-
-        // Detect Edge collisions
-        if( ball1.x + ball1.r > canvas.width || ball1.x - ball1.r < 0 ){
-            ball1.vx *= -1;
-        }
-        if( ball2.x + ball2.r > canvas.width || ball2.x - ball2.r < 0 ){
-            ball2.vx *= -1;
-        }
-
-        ball1.draw();
-        ball2.draw();
-    
-        
+        // Animate
         requestAnimationFrame(animationLoop);
     };
 
+    function move( ball ){
+        ball.x = ball.x + ball.vx;
+        ball.y = ball.y + ball.vy;
 
-    window.requestAnimationFrame = (function () {
-        return window.requestAnimationFrame ||
-            window.webkitRequestAnimationFrame ||
-            window.mozRequestAnimationFrame ||
-            window.msRequestionAnimationFrame ||
-            function (callback) {
-                window.setTimeout(callback, 1000 / 60);
+        checkEdges(ball);
+    }
+
+    function moveBalls(){
+        for( i=0; i< numOfBalls; i++){
+            move( balls[i] );
+        }
+    }
+
+    function drawBalls(){
+        for( i=0; i< numOfBalls; i++){
+            balls[i].draw();
+        }
+    }   
+
+    function checkEdges( ball ){
+        if( ball.x + ball.r > canvas.width || ball.x - ball.r < 0 ){
+            ball.vx *= -1;
+        }
+        if( ball.y + ball.r > canvas.height || ball.y - ball.r < 0 ){
+            ball.vy *= -1;
+        }
+    }
+
+    function isCollided( ball1, ball2){
+        return Math.abs(ball1.x - ball2.x) < ball1.r + ball2.r && 
+                Math.abs(ball1.y - ball2.y) < ball1.r + ball2.r;
+    }   
+
+    function checkBallCollisions(){
+
+        for(var i=0; i<numOfBalls; i++){
+            var ball1 = balls[i];
+
+            for( var j=i; j < numOfBalls; j++){
+                var ball2 = balls[j];
+
+                if(  isCollided( ball1, ball2) ){
+                    console.log('collid');
+
+                    // New valocity of ball 1 after collision x axis
+                    var vx1 =  ((ball1.m - ball2.m) * ball1.vx)  / (ball1.m + ball2.m) ;
+                        vx1 += (2 * ball2.m * ball2.vx) / (ball1.m + ball2.m);
+
+                    // New valocity of ball 2 after collision x axis
+                    var vx2 = ((ball2.m - ball1.m) * ball2.vx) / (ball1.m + ball2.m);
+                        vx2 += (2 * ball1.m * ball1.vx) / (ball1.m + ball2.m);
+
+                        ball1.vx = vx1;
+                        ball2.vx = vx2;
+                    
+
+                    // New valocity of ball 1 after collision y axis
+                    var vy1 =  ((ball1.m - ball2.m) * ball1.vy)  / (ball1.m + ball2.m) ;
+                        vy1 += (2 * ball2.m * ball2.vy) / (ball1.m + ball2.m);
+
+                    // New valocity of ball 2 after collision y axis
+                    var vy2 = ((ball2.m - ball1.m) * ball2.vy) / (ball1.m + ball2.m);
+                        vy2 += (2 * ball1.m * ball1.vy) / (ball1.m + ball2.m);
+
+                        ball1.vy = vy1;
+                        ball2.vy = vy2;
+
+                };
+
             }
-    })()
+        }
+    }
+
+}
 
 
+function getRandomInt( min, max ){
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor( Math.random() * (max - min) ) + min;
 }
