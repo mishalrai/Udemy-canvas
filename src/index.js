@@ -5,48 +5,81 @@ window.onload = function () {
     var canvas = document.getElementById("canvas");
     var context = canvas.getContext("2d");
 
+    var boudings = canvas.getBoundingClientRect();
+    var currentBall = null;
 
-    var g = 0.098;
-    var mouseX = 0;
-    var mouseY = 0; 
+    var balls = 5;
+    var ballsArr = [];
 
-
-    var ball = new Ball(20, 'green');
-    ball.x = canvas.width/2;
-    ball.y = 50;
-    ball.context = context;
-    ball.draw();
-
-    ball.vy = 2;
-
-    canvas.addEventListener('mousemove', function(event){
-        var boundings = canvas.getBoundingClientRect();
-        mouseX = event.clientX - boundings.left;
-        mouseY = event.clientY - boundings.top;
-
-        console.log( mouseX, mouseY);
-    });
-
-    
-    requestAnimationFrame(animationLoop);
-
-    function animationLoop() {
+    //Create Balls
+    for(var i=0; i<balls; i++){
+        var radius = getRandomInt( 25, 50);
+        var randColor = createRandomRGBColor();
+        var ballColor = 'rgba('+randColor.r+', '+randColor.g+', '+randColor.b+')';
         
-        // Clear Canvas
+        var ball = new Ball(radius, ballColor);
+        ball.context = context;
+        ball.x = getRandomInt( radius, canvas.width - radius );
+        ball.y = getRandomInt( radius, canvas.height - radius );
+        ballsArr.push(ball);
+    }
+
+
+    drawBalls();
+
+    // Draw ball
+    function drawBalls(){
+
+        //Clear canvas
         context.clearRect( 0, 0, canvas.width, canvas.height );
 
-        // ball.x = ball.x + ball.vx;
-        ball.vy = ball.vy + g;
-        ball.y = ball.y + ball.vy;
-        ball.draw();
-
-        // Mouse Collision check
-        if( Math.sqrt(  Math.pow( (ball.x - mouseX), 2 ) + Math.pow( (ball.y - mouseY) ,2) ) < ball.r){
-            ball.vy *= -1;
+        for(var i=0; i<balls; i++){
+            ballsArr[i].draw();
         }
-        
-        requestAnimationFrame(animationLoop);
     };
+
+    // Balls are draw from first to last so we need tho loop for last
+    // Because balls may overlay first to last 
+    function isHitOnBall( mx, my ){
+
+        for( i = balls -1; i>= 0; i--){
+
+            if( Math.sqrt( Math.pow( (mx - ballsArr[i].x), 2) + Math.pow( (my - ballsArr[i].y), 2)) < ballsArr[i].r){
+                currentBall = ballsArr[i];
+                break;
+            }
+
+        }
+
+    };
+
+
+    //Mouse mousedown handler
+    canvas.addEventListener('mousedown', function(event){
+        var mousedownX = event.clientX - boudings.left;
+        var mousedownY = event.clientY - boudings.top;
+
+        isHitOnBall( mousedownX, mousedownY );
+
+    })
+
+    //Mouse move handler
+    canvas.addEventListener('mousemove', function(event){
+        var mouseMoveX = event.clientX - boudings.left;
+        var mouseMoveY = event.clientY - boudings.top;
+        if(currentBall){
+            currentBall.x = mouseMoveX;
+            currentBall.y = mouseMoveY;
+
+            drawBalls();
+        }
+    })
+
+    //Mouse mouseup handler
+    canvas.addEventListener('mouseup', function(event){
+        currentBall = null;
+    })
+    
 
     window.requestAnimationFrame = (function () {
         return window.requestAnimationFrame ||
@@ -59,4 +92,21 @@ window.onload = function () {
     })()
 
 
+}
+
+
+
+function getRandomInt( min, max ){
+    min = Math.ceil(min);
+    max = Math.floor(max);
+
+    return Math.floor(Math.random() * (max - min)) + min;
+}
+
+
+function createRandomRGBColor(){
+    var red = getRandomInt(0, 257);
+    var green = getRandomInt(0, 257);
+    var blue = getRandomInt(0, 257);
+    return {r:red, g:green, b:blue}
 }
