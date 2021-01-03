@@ -13,7 +13,6 @@ window.requestAnimationFrame = (function () {
         }
 })()
 
-
 window.getRandomInt = function( min, max ){
     min = Math.ceil(min);
     max = Math.floor(max);
@@ -24,5 +23,5 @@ window.getRandomRGBColor = function(){
     var red = getRandomInt(0, 257);
     var green = getRandomInt(0, 257);
     var blue = getRandomInt(0, 257);
-    return {r:red, g:green, b:blue};
+    return 'rgb('+ red + ', ' + green + ', ' + blue  +')';
 }
